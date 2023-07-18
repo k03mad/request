@@ -1,0 +1,41 @@
+{
+  "name": "@k03mad/request",
+  "version": "1.0.0",
+  "description": "Request library",
+  "maintainers": [
+    "Kirill Molchanov <k03.mad@gmail.com"
+  ],
+  "main": "app/index.js",
+  "repository": "k03mad/request",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "chalk": "5.3.0",
+    "debug": "4.3.4",
+    "got": "13.0.0",
+    "moment": "2.29.4",
+    "p-queue": "7.3.4",
+    "pretty-bytes": "6.1.1"
+  },
+  "devDependencies": {
+    "@k03mad/eslint-config": "12.0.4",
+    "eslint": "8.45.0",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-jsdoc": "46.4.4",
+    "eslint-plugin-n": "16.0.1",
+    "eslint-plugin-simple-import-sort": "10.0.0",
+    "eslint-plugin-sort-destructure-keys": "1.5.0",
+    "eslint-plugin-unicorn": "48.0.0",
+    "husky": "8.0.3"
+  },
+  "scripts": {
+    "lint": "eslint ./ --report-unused-disable-directives",
+    "clean": "rm -rfv ./node_modules || true",
+    "setup": "npm run clean && npm i",
+    "prepare": "husky install"
+  }
+}
