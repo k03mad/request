@@ -105,7 +105,7 @@ export const requestCache = (url, opts = {}, {cacheBy, expire = 43_200} = {}) =>
                 const {cachedResponse, date} = cache.get(cacheKey);
 
                 const measurement = 'seconds';
-                const currentDiff = (Date.now() - date) * 1000;
+                const currentDiff = Math.round((Date.now() - date) / 1000);
 
                 if (currentDiff < expire) {
                     debug(`${green('FROM CACHE')} :: ${currentDiff}/${expire} ${measurement} left :: ${log}`);
