@@ -8,7 +8,6 @@
   "main": "app/index.js",
   "repository": "k03mad/request",
   "license": "MIT",
-  "private": true,
   "type": "module",
   "engines": {
     "node": ">=20"
