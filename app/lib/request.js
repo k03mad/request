@@ -15,10 +15,11 @@ const debug = _debug('mad:request');
 const prepareRequestOpts = (opts = {}) => {
     const UA = 'curl/8.1.2';
 
-    const preparedOpts = {
-        timeout: {request: 15_000},
-        ...opts,
-    };
+    const preparedOpts = {...opts};
+
+    if (!preparedOpts.timeout) {
+        preparedOpts.timeout = {request: 10_000};
+    }
 
     if (!preparedOpts.headers) {
         preparedOpts.headers = {'user-agent': UA};
