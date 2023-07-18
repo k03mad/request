@@ -1,7 +1,6 @@
 import chalk from 'chalk';
 import _debug from 'debug';
 import got from 'got';
-import moment from 'moment';
 
 import getCurl from './curl.js';
 import getQueue from './queue.js';
@@ -106,7 +105,7 @@ export const requestCache = (url, opts = {}, {cacheBy, expire = 43_200} = {}) =>
                 const {cachedResponse, date} = cache.get(cacheKey);
 
                 const measurement = 'seconds';
-                const currentDiff = moment().diff(moment(date), measurement);
+                const currentDiff = (Date.now() - date) * 1000;
 
                 if (currentDiff < expire) {
                     debug(`${green('FROM CACHE')} :: ${currentDiff}/${expire} ${measurement} left :: ${log}`);
@@ -129,7 +128,7 @@ export const requestCache = (url, opts = {}, {cacheBy, expire = 43_200} = {}) =>
             cachedResponse[key] = res[key];
         });
 
-        cache.set(cacheKey, {date: moment(), cachedResponse});
+        cache.set(cacheKey, {date: Date.now(), cachedResponse});
         debug(`${cyan('CACHE SAVED')} :: ${log}`);
 
         return res;
