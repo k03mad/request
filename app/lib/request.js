@@ -52,6 +52,32 @@ const sendRequest = async (url, opts) => {
         return response;
     } catch (err) {
         debug(getCurl(url, preparedOpts, err));
+
+        err.__pretty = {};
+
+        err.__pretty.req = [
+            err?.response?.statusCode,
+            err?.options?.method,
+            url,
+            err?.response?.ip ? `(${err.response.ip})` : '',
+        ].join(' ');
+
+        if (Object.keys(opts).length > 0) {
+            err.__pretty.opts = opts;
+        }
+
+        if (err?.response?.body) {
+            try {
+                err.__pretty.body = JSON.parse(err.response.body);
+            } catch {
+                err.__pretty.body = err.response.body;
+            }
+        }
+
+        delete err.timings;
+        delete err.options;
+        delete err.input;
+
         throw err;
     }
 };
