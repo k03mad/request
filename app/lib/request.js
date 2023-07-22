@@ -17,6 +17,10 @@ const prepareRequestOpts = (opts = {}) => {
 
     const preparedOpts = {...opts};
 
+    if (!preparedOpts.dnsCache) {
+        preparedOpts.dnsCache = true;
+    }
+
     if (!preparedOpts.timeout) {
         preparedOpts.timeout = {request: 10_000};
     }
