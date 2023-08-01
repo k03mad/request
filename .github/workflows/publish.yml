@@ -18,6 +18,9 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
+      - name: Set credentials
+        run: git config user.email "auto@action.autoaction" && git config user.name "Action"
+
       - name: Update version
         run: npm version patch
 
