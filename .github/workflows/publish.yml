@@ -1,0 +1,28 @@
+name: Publish
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  eslint:
+    name: Publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Update version
+        run: npm version patch
+
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v5
+        with:
+          title: Bump version
+          commit-message: Bump version
