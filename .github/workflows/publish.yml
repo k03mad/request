@@ -22,13 +22,16 @@ jobs:
           node-version-file: '.nvmrc'
 
       - name: Install dependencies
-        run: npm run setup
+        run: npm i
 
       - name: Set credentials
         run: git config user.email "auto@action.autoaction_1" && git config user.name "Action"
 
       - name: Update version
         run: npm version patch
+
+      - name: Git status
+        run: git status
 
       - name: Publish version
         uses: JS-DevTools/npm-publish@v2
