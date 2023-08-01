@@ -80,7 +80,7 @@ export default (url, {
     if (res) {
         const message = JSON.stringify(res.body || res.message);
 
-        if (message?.length < 1000) {
+        if (message?.length < 1500) {
             msg.push(`\n${dim(green(message))}`);
         }
     }
