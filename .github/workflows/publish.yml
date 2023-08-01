@@ -19,6 +19,9 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
+      - name: Install dependencies
+        run: npm run setup
+
       - name: Set credentials
         run: git config user.email "auto@action.autoaction_1" && git config user.name "Action"
 
