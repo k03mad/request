@@ -8,6 +8,7 @@ on:
 jobs:
   eslint:
     name: Publish
+    environment: npm
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,6 +24,11 @@ jobs:
 
       - name: Update version
         run: npm version patch
+
+      - name: Publish version
+        uses: JS-DevTools/npm-publish@v2
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
 
       - name: Create PR
         uses: peter-evans/create-pull-request@v5
