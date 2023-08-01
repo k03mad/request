@@ -17,7 +17,7 @@ const prepareRequestOpts = (opts = {}) => {
 
     const preparedOpts = {...opts};
 
-    if (!preparedOpts.dnsCache) {
+    if (preparedOpts.dnsCache === undefined) {
         preparedOpts.dnsCache = true;
     }
 
