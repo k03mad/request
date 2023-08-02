@@ -8,26 +8,11 @@ import getQueue from './queue.js';
 const {blue, cyan, dim, green, red, yellow} = chalk;
 const debug = _debug('mad:request');
 
-/**
- * @param {object} opts
- */
-const prepareRequestOpts = (opts = {}) => {
-    const UA = 'curl/8.1.2';
-
-    if (opts.dnsCache === undefined) {
-        opts.dnsCache = true;
-    }
-
-    if (!opts.timeout) {
-        opts.timeout = {request: 15_000};
-    }
-
-    if (!opts.headers) {
-        opts.headers = {'user-agent': UA};
-    } else if (!opts.headers['user-agent']) {
-        opts.headers['user-agent'] = UA;
-    }
-};
+const gotDefault = got.extend({
+    dnsCache: true,
+    timeout: {request: 15_000},
+    headers: {'user-agent': 'curl/8.1.2'},
+});
 
 /**
  * Отправить запрос
@@ -36,10 +21,8 @@ const prepareRequestOpts = (opts = {}) => {
  * @returns {object}
  */
 const sendRequest = async (url, opts) => {
-    prepareRequestOpts(opts);
-
     try {
-        const response = await got(url, opts);
+        const response = await gotDefault(url, opts);
 
         if (!opts.responseType) {
             try {
@@ -52,22 +35,25 @@ const sendRequest = async (url, opts) => {
     } catch (err) {
         debug(getCurl(url, opts, err));
 
-        err.__pretty = {};
-
-        err.__pretty.req = [
-            err?.response?.statusCode,
+        err.__req = [
+            err?.response?.statusCode || err?.code,
             err?.options?.method,
             url,
-            err?.response?.ip ? `(${err.response.ip})` : '',
-        ].join(' ');
+        ].join(' ').trim();
 
-        err.__pretty.opts = opts;
+        if (err?.response?.ip) {
+            err.__ip = err.response.ip;
+        }
+
+        if (Object.keys(opts).length > 0) {
+            err.__opts = opts;
+        }
 
         if (err?.response?.body) {
             try {
-                err.__pretty.body = JSON.parse(err.response.body);
+                err.__res = JSON.parse(err.response.body);
             } catch {
-                err.__pretty.body = err.response.body;
+                err.__res = err.response.body;
             }
         }
 
@@ -110,8 +96,6 @@ export const requestCache = (url, opts = {}, {cacheBy, expire = 43_200} = {}) =>
     const queue = getQueue(new URL(url).host, opts.method);
 
     return queue.add(async () => {
-        prepareRequestOpts(opts);
-
         const cacheGotResponseKeys = [
             'body',
             'headers',
