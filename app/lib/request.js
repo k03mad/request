@@ -10,28 +10,23 @@ const debug = _debug('mad:request');
 
 /**
  * @param {object} opts
- * @returns {object}
  */
 const prepareRequestOpts = (opts = {}) => {
     const UA = 'curl/8.1.2';
 
-    const preparedOpts = {...opts};
-
-    if (preparedOpts.dnsCache === undefined) {
-        preparedOpts.dnsCache = true;
+    if (opts.dnsCache === undefined) {
+        opts.dnsCache = true;
     }
 
-    if (!preparedOpts.timeout) {
-        preparedOpts.timeout = {request: 15_000};
+    if (!opts.timeout) {
+        opts.timeout = {request: 15_000};
     }
 
-    if (!preparedOpts.headers) {
-        preparedOpts.headers = {'user-agent': UA};
-    } else if (!preparedOpts.headers['user-agent']) {
-        preparedOpts.headers['user-agent'] = UA;
+    if (!opts.headers) {
+        opts.headers = {'user-agent': UA};
+    } else if (!opts.headers['user-agent']) {
+        opts.headers['user-agent'] = UA;
     }
-
-    return preparedOpts;
 };
 
 /**
@@ -41,21 +36,21 @@ const prepareRequestOpts = (opts = {}) => {
  * @returns {object}
  */
 const sendRequest = async (url, opts) => {
-    const preparedOpts = prepareRequestOpts(opts);
+    prepareRequestOpts(opts);
 
     try {
-        const response = await got(url, preparedOpts);
+        const response = await got(url, opts);
 
-        if (!preparedOpts.responseType) {
+        if (!opts.responseType) {
             try {
                 response.body = JSON.parse(response.body);
             } catch {}
         }
 
-        debug(getCurl(url, preparedOpts, response));
+        debug(getCurl(url, opts, response));
         return response;
     } catch (err) {
-        debug(getCurl(url, preparedOpts, err));
+        debug(getCurl(url, opts, err));
 
         err.__pretty = {};
 
@@ -66,9 +61,7 @@ const sendRequest = async (url, opts) => {
             err?.response?.ip ? `(${err.response.ip})` : '',
         ].join(' ');
 
-        if (Object.keys(opts).length > 0) {
-            err.__pretty.opts = opts;
-        }
+        err.__pretty.opts = opts;
 
         if (err?.response?.body) {
             try {
@@ -117,7 +110,7 @@ export const requestCache = (url, opts = {}, {cacheBy, expire = 43_200} = {}) =>
     const queue = getQueue(new URL(url).host, opts.method);
 
     return queue.add(async () => {
-        const preparedOpts = prepareRequestOpts(opts);
+        prepareRequestOpts(opts);
 
         const cacheGotResponseKeys = [
             'body',
@@ -128,7 +121,7 @@ export const requestCache = (url, opts = {}, {cacheBy, expire = 43_200} = {}) =>
             'timings',
         ];
 
-        const cacheKey = `${url}::${JSON.stringify(cacheBy || preparedOpts)}`;
+        const cacheKey = `${url}::${JSON.stringify(cacheBy || opts)}`;
         const log = `${blue(url)}\n${dim(cacheKey)}`;
 
         try {
@@ -151,7 +144,7 @@ export const requestCache = (url, opts = {}, {cacheBy, expire = 43_200} = {}) =>
             debug(`${red('CACHE ERROR')} :: ${dim(err)} :: ${log}`);
         }
 
-        const res = await request(url, preparedOpts, {skipQueue: true});
+        const res = await request(url, opts, {skipQueue: true});
 
         const cachedResponse = {};
 
