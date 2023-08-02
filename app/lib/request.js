@@ -22,7 +22,7 @@ const prepareRequestOpts = (opts = {}) => {
     }
 
     if (!preparedOpts.timeout) {
-        preparedOpts.timeout = {request: 10_000};
+        preparedOpts.timeout = {request: 15_000};
     }
 
     if (!preparedOpts.headers) {
