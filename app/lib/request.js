@@ -11,7 +11,7 @@ const debug = _debug('mad:request');
 const gotDefault = got.extend({
     dnsCache: true,
     timeout: {request: 15_000},
-    headers: {'user-agent': 'curl/8.1.2'},
+    headers: {'user-agent': 'curl/7.81.0'},
 });
 
 /**
