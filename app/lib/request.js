@@ -8,21 +8,37 @@ import getQueue from './queue.js';
 const {blue, cyan, dim, green, red, yellow} = chalk;
 const debug = _debug('mad:request');
 
-const gotDefault = got.extend({
+const gotCache = new Map();
+
+const cacheGotResponseKeys = [
+    'body',
+    'headers',
+    'method',
+    'statusCode',
+    'statusMessage',
+    'timings',
+];
+
+const gotDefaultOpts = got.extend({
     dnsCache: true,
     timeout: {request: 15_000},
     headers: {'user-agent': 'curl/7.81.0'},
 });
 
+const cacheDebug = msgArr => {
+    if (process.env.DEBUG) {
+        debug(msgArr.join(' :: '));
+    }
+};
+
 /**
- * Отправить запрос
  * @param {string} url
  * @param {object} opts
  * @returns {object}
  */
 const sendRequest = async (url, opts) => {
     try {
-        const response = await gotDefault(url, opts);
+        const response = await gotDefaultOpts(url, opts);
 
         if (!opts.responseType) {
             try {
@@ -65,21 +81,12 @@ const sendRequest = async (url, opts) => {
     }
 };
 
-export const cache = new Map();
-
 /**
- * Отправить запрос c выбором использования очереди
  * @param {string} url
  * @param {object} [opts]
- * @param {object} [params]
- * @param {boolean} [params.skipQueue]
  * @returns {Promise<object>}
  */
-export const request = (url, opts = {}, {skipQueue} = {}) => {
-    if (skipQueue) {
-        return sendRequest(url, opts);
-    }
-
+export const request = (url, opts = {}) => {
     const queue = getQueue(new URL(url).host, opts.method);
     return queue.add(() => sendRequest(url, opts));
 };
@@ -96,39 +103,31 @@ export const requestCache = (url, opts = {}, {cacheBy, expire = 43_200} = {}) =>
     const queue = getQueue(new URL(url).host, opts.method);
 
     return queue.add(async () => {
-        const cacheGotResponseKeys = [
-            'body',
-            'headers',
-            'method',
-            'statusCode',
-            'statusMessage',
-            'timings',
-        ];
-
         const cacheKey = `${url}::${JSON.stringify(cacheBy || opts)}`;
-        const log = `${blue(url)}\n${dim(cacheKey)}`;
+        const urlLog = `${blue(url)}\n${dim(cacheKey)}`;
 
         try {
-            if (cache.has(cacheKey)) {
-                const {cachedResponse, date} = cache.get(cacheKey);
+            if (gotCache.has(cacheKey)) {
+                const {cachedResponse, date} = gotCache.get(cacheKey);
 
                 const measurement = 'seconds';
                 const currentDiff = Math.round((Date.now() - date) / 1000);
+                const diffLog = `${currentDiff}/${expire} ${measurement} left`;
 
                 if (currentDiff < expire) {
-                    debug(`${green('FROM CACHE')} :: ${currentDiff}/${expire} ${measurement} left :: ${log}`);
+                    cacheDebug([green('FROM CACHE'), diffLog, urlLog]);
                     return {cacheKey, ...cachedResponse};
                 }
 
-                debug(`${red('CACHE EXPIRED')} :: ${currentDiff}/${expire} ${measurement} left :: ${log}`);
+                cacheDebug([yellow('CACHE EXPIRED'), diffLog, urlLog]);
             } else {
-                debug(`${yellow('CACHE NOT FOUND')} :: ${log}`);
+                cacheDebug([blue('CACHE NOT FOUND'), urlLog]);
             }
         } catch (err) {
-            debug(`${red('CACHE ERROR')} :: ${dim(err)} :: ${log}`);
+            cacheDebug([red('CACHE ERROR'), dim(err), urlLog]);
         }
 
-        const res = await request(url, opts, {skipQueue: true});
+        const res = await sendRequest(url, opts);
 
         const cachedResponse = {};
 
@@ -136,8 +135,8 @@ export const requestCache = (url, opts = {}, {cacheBy, expire = 43_200} = {}) =>
             cachedResponse[key] = res[key];
         });
 
-        cache.set(cacheKey, {date: Date.now(), cachedResponse});
-        debug(`${cyan('CACHE SAVED')} :: ${log}`);
+        gotCache.set(cacheKey, {date: Date.now(), cachedResponse});
+        cacheDebug([cyan('CACHE SAVED'), urlLog]);
 
         return res;
     });

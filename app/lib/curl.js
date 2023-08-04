@@ -4,7 +4,6 @@ import prettyBytes from 'pretty-bytes';
 const {bgWhite, black, blue, dim, green, magenta, red, white, yellow} = chalk;
 
 /**
- * Сформировать curl-строку из опций got
  * @param {string} url
  * @param {object} [opts]
  * @param {string} [opts.method]
@@ -25,12 +24,10 @@ export default (url, {
 }, res) => {
     const msg = [];
 
-    // если третий параметр — объект ошибки, то все необходимое на уровень ниже, в ключе response
     if (res?.response) {
         res = res.response;
     }
 
-    // 200 [800 ms] [3.15 kB]
     if (res?.statusCode) {
         msg.push(bgWhite(black(res.statusCode)));
     }
