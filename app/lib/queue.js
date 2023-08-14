@@ -41,23 +41,21 @@ const getLoggedQueue = (host, opts) => {
 
 /**
  * @param {string} host
- * @param {object} params
- * @param {number} params.concurrency
- * @param {number} params.rpm
- * @param {number} params.rps
+ * @param {object} [params]
+ * @param {number} [params.concurrency]
+ * @param {number} [params.rpm]
+ * @param {number} [params.rps]
  * @returns {object}
  */
-export default (host, params) => {
+export default (host, params = {}) => {
     if (requestQueue[host]?._events) {
         return requestQueue[host];
     }
 
-    if (Object.keys(params).length > 0) {
-        for (const [key, value] of Object.entries(params)) {
-            if (intervals[key]) {
-                requestQueue[host] = intervals[key](value);
-                break;
-            }
+    for (const [key, value] of Object.entries(params)) {
+        if (intervals[key]) {
+            requestQueue[host] = intervals[key](value);
+            break;
         }
     }
 
