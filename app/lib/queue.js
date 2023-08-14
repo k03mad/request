@@ -11,6 +11,7 @@ const intervals = {
 
 // host: p-queue options
 const requestQueue = {
+    // default
     '*': intervals.concurrency(3),
 };
 
