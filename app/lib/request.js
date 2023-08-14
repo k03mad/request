@@ -84,10 +84,14 @@ const sendRequest = async (url, opts) => {
 /**
  * @param {string} url
  * @param {object} [opts]
+ * @param {object} [params]
+ * @param {number} [params.concurrency]
+ * @param {number} [params.rpm]
+ * @param {number} [params.rps]
  * @returns {Promise<object>}
  */
-export const request = (url, opts = {}) => {
-    const queue = getQueue(new URL(url).host, opts.method);
+export const request = (url, opts = {}, params = {}) => {
+    const queue = getQueue(new URL(url).host, params);
     return queue.add(() => sendRequest(url, opts));
 };
 
@@ -97,10 +101,13 @@ export const request = (url, opts = {}) => {
  * @param {object} [params]
  * @param {number} [params.expire] seconds
  * @param {object} [params.cacheBy]
+ * @param {number} [params.concurrency]
+ * @param {number} [params.rpm]
+ * @param {number} [params.rps]
  * @returns {Promise<object>}
  */
-export const requestCache = (url, opts = {}, {cacheBy, expire = 43_200} = {}) => {
-    const queue = getQueue(new URL(url).host, opts.method);
+export const requestCache = (url, opts = {}, {cacheBy, expire = 43_200, ...params} = {}) => {
+    const queue = getQueue(new URL(url).host, params);
 
     return queue.add(async () => {
         const cacheKey = `${url}::${JSON.stringify(cacheBy || opts)}`;

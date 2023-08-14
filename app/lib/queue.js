@@ -3,26 +3,24 @@ import PQueue from 'p-queue';
 
 const debug = _debug('mad:queue');
 
-// const rps = num => ({intervalCap: num, interval: 1000});
-const concurrency = num => ({concurrency: num});
+const intervals = {
+    concurrency: num => ({concurrency: num}),
+    rpm: num => ({intervalCap: num, interval: 60_000}),
+    rps: num => ({intervalCap: num, interval: 1000}),
+};
 
-// first level — host
-// second level — method
-// third level — p-queue options
+// host: p-queue options
 const requestQueue = {
-    '*': {
-        '*': concurrency(3),
-    },
+    '*': intervals.concurrency(3),
 };
 
 /**
  * @param {string} host
- * @param {string} method
  * @param {object} opts
  * @returns {object}
  */
-const getLoggedQueue = (host, method, opts) => {
-    const queue = requestQueue[host][method];
+const getLoggedQueue = (host, opts) => {
+    const queue = requestQueue[host];
 
     queue.on('active', () => {
         const {pending, size} = queue;
@@ -32,9 +30,7 @@ const getLoggedQueue = (host, method, opts) => {
             ? `${concurrent} concurrent`
             : `${intervalCap} rp ${interval} ms`;
 
-        const logMessage = `[${
-            method === '*' ? '' : `${method}: `
-        }${host}] ${parallel} | queue: ${size} | running: ${pending}`;
+        const logMessage = `[${host}] ${parallel} | queue: ${size} | running: ${pending}`;
 
         debug(logMessage);
     });
@@ -44,35 +40,33 @@ const getLoggedQueue = (host, method, opts) => {
 
 /**
  * @param {string} host
- * @param {string} method
+ * @param {object} params
+ * @param {number} params.concurrency
+ * @param {number} params.rpm
+ * @param {number} params.rps
  * @returns {object}
  */
-export default (host, method = 'GET') => {
-    for (const elem of [method, '*']) {
-        if (requestQueue[host]?.[elem]?._events) {
-            return requestQueue[host][elem];
-        }
+export default (host, params) => {
+    if (requestQueue[host]?._events) {
+        return requestQueue[host];
+    }
 
-        if (requestQueue[host]?.[elem]) {
-            const opts = requestQueue[host][elem];
-            requestQueue[host][elem] = new PQueue(opts);
-            return getLoggedQueue(host, elem, opts);
+    if (Object.keys(params).length > 0) {
+        for (const [key, value] of Object.entries(params)) {
+            if (intervals[key]) {
+                requestQueue[host] = intervals[key](value);
+                break;
+            }
         }
     }
 
     if (requestQueue[host]) {
-        const opts = requestQueue['*']['*'];
-        requestQueue[host]['*'] = new PQueue(opts);
-        return getLoggedQueue(host, '*', opts);
+        const opts = requestQueue[host];
+        requestQueue[host] = new PQueue(opts);
+        return getLoggedQueue(host, opts);
     }
 
-    if (requestQueue['*'][method]) {
-        const opts = requestQueue['*'][method];
-        requestQueue[host] = {[method]: new PQueue(opts)};
-        return getLoggedQueue(host, method, opts);
-    }
-
-    const opts = requestQueue['*']['*'];
-    requestQueue[host] = {'*': new PQueue(opts)};
-    return getLoggedQueue(host, '*', opts);
+    const opts = requestQueue['*'];
+    requestQueue[host] = new PQueue(opts);
+    return getLoggedQueue(host, opts);
 };
