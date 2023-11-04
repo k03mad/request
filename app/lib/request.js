@@ -22,7 +22,7 @@ const cacheGotResponseKeys = [
 const gotDefaultOpts = got.extend({
     dnsCache: true,
     timeout: {request: 15_000},
-    headers: {'user-agent': 'curl/7.81.0'},
+    headers: {'user-agent': 'curl/8.4.0'},
 });
 
 const cacheDebug = msgArr => {
@@ -85,13 +85,14 @@ const sendRequest = async (url, opts) => {
  * @param {string} url
  * @param {object} [opts]
  * @param {object} [params]
+ * @param {string} [params.queueBy]
  * @param {number} [params.concurrency]
  * @param {number} [params.rpm]
  * @param {number} [params.rps]
  * @returns {Promise<object>}
  */
 export const request = (url, opts = {}, params = {}) => {
-    const queue = getQueue(new URL(url).host, params);
+    const queue = getQueue(params.queueBy || new URL(url).host, params);
     return queue.add(() => sendRequest(url, opts));
 };
 
@@ -101,13 +102,14 @@ export const request = (url, opts = {}, params = {}) => {
  * @param {object} [params]
  * @param {number} [params.expire] seconds
  * @param {object} [params.cacheBy]
+ * @param {string} [params.queueBy]
  * @param {number} [params.concurrency]
  * @param {number} [params.rpm]
  * @param {number} [params.rps]
  * @returns {Promise<object>}
  */
-export const requestCache = (url, opts = {}, {cacheBy, expire = 43_200, ...params} = {}) => {
-    const queue = getQueue(new URL(url).host, params);
+export const requestCache = (url, opts = {}, {cacheBy, expire = 43_200, queueBy, ...params} = {}) => {
+    const queue = getQueue(queueBy || new URL(url).host, params);
 
     return queue.add(async () => {
         const cacheKey = `${url}::${JSON.stringify(cacheBy || opts)}`;
