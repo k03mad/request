@@ -1,6 +1,6 @@
 {
   "name": "@k03mad/request",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "Request library",
   "maintainers": [
     "Kirill Molchanov <k03.mad@gmail.com"
