@@ -1,4 +1,4 @@
-name: ESLint
+name: Lint
 
 on:
   push:
@@ -11,11 +11,10 @@ on:
     - cron: '00 15 * * 6'
 
 jobs:
-  eslint:
-    name: ESLint
+  lint:
+    name: Lint
     permissions:
       contents: read
-      security-events: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,15 +25,8 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
-      - name: Install dependencies
+      - name: Run setup
         run: npm run setup
 
-      - name: Run ESLint
-        run: npm run lint:github
-        continue-on-error: true
-
-      - name: Upload results
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: eslint-results.sarif
-          wait-for-processing: true
+      - name: Run lint
+        run: npm run lint
