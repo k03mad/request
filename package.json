@@ -20,15 +20,18 @@
     "pretty-bytes": "6.1.1"
   },
   "devDependencies": {
-    "@k03mad/eslint-config": "16.6.0",
+    "@k03mad/eslint-config": "16.8.0",
     "eslint": "8.56.0",
     "husky": "8.0.3"
   },
   "scripts": {
     "lint": "npm run lint:eslint",
     "lint:eslint": "eslint ./ --cache",
-    "clean": "rm -rf ./node_modules || true",
+    "clean": "npm run clean:modules && npm run clean:eslint:cache",
+    "clean:modules": "rm -rf ./node_modules || true",
+    "clean:eslint:cache": "rm -rf .eslintcache || true",
     "setup": "npm run clean && npm i",
+    "setup:prod": "npm run clean && npm i --omit=dev",
     "prepare": "husky install || true"
   }
 }
