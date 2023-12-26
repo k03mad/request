@@ -29,6 +29,6 @@
     "lint:eslint": "eslint ./ --cache",
     "clean": "rm -rf ./node_modules || true",
     "setup": "npm run clean && npm i",
-    "prepare": "husky install"
+    "prepare": "husky install || true"
   }
 }
