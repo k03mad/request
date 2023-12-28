@@ -24,27 +24,22 @@ export default (url, {
 }, res) => {
     const msg = [];
 
-    let urlClone = url;
-    let resClone = structuredClone(res);
+    const fullUrl = searchParams
+        ? `${url}?${new URLSearchParams(searchParams).toString()}`
+        : url;
 
-    if (resClone?.response) {
-        resClone = resClone.response;
+    const response = res?.response || res;
+
+    if (response.statusCode) {
+        msg.push(bgWhite(black(response.statusCode)));
     }
 
-    if (resClone?.statusCode) {
-        msg.push(bgWhite(black(resClone.statusCode)));
+    if (response.timings) {
+        msg.push(`[${response.timings.phases.total} ms]`);
     }
 
-    if (resClone?.timings) {
-        msg.push(`[${resClone.timings.phases.total} ms]`);
-    }
-
-    if (resClone?.headers?.['content-length']) {
-        msg.push(`[${prettyBytes(Number(resClone.headers['content-length']))}]`);
-    }
-
-    if (searchParams) {
-        urlClone += `?${new URLSearchParams(searchParams).toString()}`;
+    if (response.headers?.['content-length']) {
+        msg.push(`[${prettyBytes(Number(response.headers['content-length']))}]`);
     }
 
     msg.push(white('curl -v -X'), green(method));
@@ -53,7 +48,7 @@ export default (url, {
         msg.push(dim(red(`-u ${username}:${password}`)));
     }
 
-    msg.push(blue(urlClone));
+    msg.push(blue(fullUrl));
 
     let bodyParams;
 
@@ -77,8 +72,8 @@ export default (url, {
         msg.push(dim(yellow(bodyParams)));
     }
 
-    if (resClone) {
-        const message = JSON.stringify(resClone.body || resClone.message);
+    if (response) {
+        const message = JSON.stringify(response.body || response.message);
 
         if (message?.length < 1500) {
             msg.push(`\n${dim(green(message))}`);
