@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import _debug from 'debug';
 import got from 'got';
+import stripAnsi from 'strip-ansi';
 
 import getCurl from './curl.js';
 import getQueue from './queue.js';
@@ -40,7 +41,7 @@ const sendRequest = async (url, opts) => {
     try {
         const response = await gotDefaultOpts(url, opts);
 
-        if (!opts.responseType) {
+        if (!opts.responseType && response.body) {
             try {
                 response.body = JSON.parse(response.body);
             } catch {}
@@ -49,27 +50,24 @@ const sendRequest = async (url, opts) => {
         debug(getCurl(response, opts));
         return response;
     } catch (err) {
-        debug(getCurl(err, opts));
-
-        err.__req = [
-            err?.response?.statusCode || err?.code,
-            err?.options?.method,
-            url,
-        ].join(' ').trim();
-
-        if (err?.response?.ip) {
-            err.__ip = err.response.ip;
+        if (!opts.responseType && err.response?.body) {
+            try {
+                err.response.body = JSON.parse(err.response.body);
+            } catch {}
         }
 
-        if (Object.keys(opts).length > 0) {
-            err.__opts = opts;
-        }
+        const curl = getCurl(err, opts, {skipResponse: true});
+        debug(curl);
+
+        err.__ = {
+            debug: stripAnsi(curl).split(' \n'),
+        };
 
         if (err?.response?.body) {
             try {
-                err.__res = JSON.parse(err.response.body);
+                err.__.response = JSON.parse(err.response.body);
             } catch {
-                err.__res = err.response.body;
+                err.__.response = err.response.body;
             }
         }
 

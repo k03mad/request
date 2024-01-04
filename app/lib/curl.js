@@ -27,9 +27,11 @@ const SKIP_HEADERS = new Set(['accept-encoding: gzip, deflate, br']);
  * @param {string} [opts.body]
  * @param {object} [opts.json]
  * @param {object} [opts.form]
+ * @param {object} [params]
+ * @param {boolean} [params.skipResponse]
  * @returns {string}
  */
-export default (res, {body, form, json}) => {
+export default (res, {body, form, json}, {skipResponse} = {}) => {
     const msg = [];
 
     const response = res?.response || res;
@@ -52,15 +54,19 @@ export default (res, {body, form, json}) => {
     }
 
     if (response.timings?.phases?.total) {
-        msg.push(gray(`[${response.timings.phases.total} ms]`));
+        msg.push(gray(`[response: ${response.timings.phases.total} ms]`));
     }
 
     if (response.headers?.['content-length']) {
-        msg.push(gray(`[${prettyBytes(Number(response.headers['content-length']))}]`));
+        msg.push(gray(`[content: ${prettyBytes(Number(response.headers['content-length']))}]`));
+    }
+
+    if (response.ip) {
+        msg.push(gray(`[host: ${response.ip}]`));
     }
 
     // begin verbose curl with method and url
-    msg.push('curl -v');
+    msg.push('\ncurl -v');
 
     if (reqOptions?.method) {
         msg.push(cyan(`-X ${reqOptions.method}`));
@@ -104,7 +110,7 @@ export default (res, {body, form, json}) => {
     }
 
     // response if any and small length
-    if (response) {
+    if (!skipResponse && response) {
         const message = JSON.stringify(response.body || response.message);
 
         if (message?.length < MIN_RESPONSE_SYM_LENGTH_TO_PRINT) {
