@@ -46,10 +46,10 @@ const sendRequest = async (url, opts) => {
             } catch {}
         }
 
-        debug(getCurl(url, opts, response));
+        debug(getCurl(response, opts));
         return response;
     } catch (err) {
-        debug(getCurl(url, opts, err));
+        debug(getCurl(err, opts));
 
         err.__req = [
             err?.response?.statusCode || err?.code,
