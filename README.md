@@ -1,1 +1,1 @@
-Adds queues and logging to the `Got` library
+"Got" with queues and debug logs
