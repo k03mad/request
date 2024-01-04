@@ -6,7 +6,10 @@
     "Kirill Molchanov <k03.mad@gmail.com"
   ],
   "main": "app/index.js",
-  "repository": "k03mad/request",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/k03mad/request.git"
+  },
   "license": "MIT",
   "type": "module",
   "engines": {
