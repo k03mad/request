@@ -26,8 +26,8 @@ dependencies:
 
 devDependencies:
   '@k03mad/eslint-config':
-    specifier: 18.0.0
-    version: 18.0.0(eslint@8.56.0)(typescript@5.3.3)
+    specifier: 18.1.0
+    version: 18.1.0(eslint@8.56.0)(typescript@5.3.3)
   eslint:
     specifier: 8.56.0
     version: 8.56.0
@@ -130,8 +130,8 @@ packages:
     resolution: {integrity: sha512-dvuCeX5fC9dXgJn9t+X5atfmgQAzUOWqS1254Gh0m6i8wKd10ebXkfNKiRK+1GWi/yTvvLDHpoxLr0xxxeslWw==}
     dev: true
 
-  /@k03mad/eslint-config@18.0.0(eslint@8.56.0)(typescript@5.3.3):
-    resolution: {integrity: sha512-fce2SJFogcKIRiXGheIxaknqnuAy8WlqTf6v698se7tBbERRHhotsLryeN4rdcYcJB+xhQlcMuXF7m21HZA4FA==}
+  /@k03mad/eslint-config@18.1.0(eslint@8.56.0)(typescript@5.3.3):
+    resolution: {integrity: sha512-w5dzMzbR/bVBSahTMJMkHE8ckkKo5/chQW0wgHXqQihdA7ner/fptKx8P3uCm7QKB22oqFSImnuQq+pVI8YU/A==}
     engines: {node: '>=16'}
     dependencies:
       '@eslint/js': 8.56.0
