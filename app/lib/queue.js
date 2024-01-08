@@ -5,8 +5,8 @@ const debug = _debug('mad:queue');
 
 const intervals = {
     concurrency: num => ({concurrency: num}),
-    rpm: num => ({intervalCap: num, interval: 60_000}),
-    rps: num => ({intervalCap: num, interval: 1000}),
+    rpm: num => ({interval: 60_000, intervalCap: num}),
+    rps: num => ({interval: 1000, intervalCap: num}),
 };
 
 // host: p-queue options

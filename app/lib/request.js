@@ -22,8 +22,8 @@ const cacheGotResponseKeys = [
 
 const gotDefaultOpts = got.extend({
     dnsCache: true,
-    timeout: {request: 15_000},
     headers: {'user-agent': 'curl/8.4.0'},
+    timeout: {request: 15_000},
 });
 
 const cacheDebug = msgArr => {
@@ -142,7 +142,7 @@ export const requestCache = (url, opts = {}, {cacheBy, expire = 43_200, queueBy,
             cachedResponse[key] = res[key];
         });
 
-        gotCache.set(cacheKey, {date: Date.now(), cachedResponse});
+        gotCache.set(cacheKey, {cachedResponse, date: Date.now()});
         cacheDebug([cyan('CACHE SAVED'), urlLog]);
 
         return res;
