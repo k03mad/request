@@ -1,1 +1,1 @@
-"Got" with queues and debug logs
+Simple "Got" requests library wrapper for personal use
