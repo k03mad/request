@@ -35,7 +35,6 @@
     "clean:modules": "rm -rf ./node_modules || true",
     "clean:eslint:cache": "rm -rf .eslintcache || true",
     "setup": "npm run clean && npm i",
-    "setup:prod": "npm run clean && npm i --omit=dev",
     "prepare": "husky install || true"
   }
 }
