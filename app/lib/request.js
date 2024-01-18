@@ -22,8 +22,8 @@ const cacheGotResponseKeys = [
 
 const gotDefaultOpts = got.extend({
     dnsCache: true,
-    headers: {'user-agent': 'curl/8.4.0'},
-    timeout: {request: 15_000},
+    headers: {'user-agent': 'curl/8.5.0'},
+    timeout: {request: 10_000},
 });
 
 const cacheDebug = msgArr => {
