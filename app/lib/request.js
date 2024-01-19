@@ -69,6 +69,8 @@ const sendRequest = async (url, opts) => {
             } catch {
                 err.__.response = err.response.body;
             }
+
+            err.__.response = JSON.stringify(err.__.response);
         }
 
         delete err.timings;
