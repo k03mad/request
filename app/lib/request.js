@@ -65,12 +65,10 @@ const sendRequest = async (url, opts) => {
 
         if (err?.response?.body) {
             try {
-                err.__.response = JSON.parse(err.response.body);
+                err.__.response = JSON.stringify(JSON.parse(err.response.body));
             } catch {
-                err.__.response = err.response.body;
+                err.__.response = JSON.stringify(err.response.body);
             }
-
-            err.__.response = JSON.stringify(err.__.response);
         }
 
         delete err.timings;
