@@ -25,6 +25,9 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
+      - name: Install PNPM
+        run: npm i pnpm -g
+
       - name: Run setup
         run: npm run setup
 
