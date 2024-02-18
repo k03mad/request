@@ -19,12 +19,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-
-      - name: Install PNPM
-        run: npm i pnpm -g
-
-      - name: Run setup
-        run: npm run setup
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Run publish
         run: npm publish
