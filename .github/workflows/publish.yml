@@ -7,16 +7,15 @@ on:
 
 jobs:
   publish:
+    environment: npm
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
+          registry-url: 'https://registry.npmjs.org'
       - run: npm run setup
-      - run: |
-          npm config set @k03mad:registry 'https://registry.npmjs.org' --location project
-          npm config set //registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN} --location project
-          npm publish
+      - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
