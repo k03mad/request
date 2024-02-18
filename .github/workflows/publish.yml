@@ -13,9 +13,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          registry-url: 'https://registry.npmjs.org'
-          scope: '@k03mad'
       - run: npm run setup
-      - run: npm publish
+      - run: |
+          pnpm config set @k03mad:registry 'https://registry.npmjs.org' --location project
+          pnpm config set //registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN} --location project
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
