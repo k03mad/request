@@ -15,8 +15,8 @@ jobs:
           node-version-file: '.nvmrc'
       - run: npm run setup
       - run: |
-          pnpm config set @k03mad:registry 'https://registry.npmjs.org' --location project
-          pnpm config set //registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN} --location project
+          npm config set @k03mad:registry 'https://registry.npmjs.org' --location project
+          npm config set //registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN} --location project
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
