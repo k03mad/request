@@ -3,8 +3,8 @@ import _debug from 'debug';
 import got from 'got';
 import stripAnsi from 'strip-ansi';
 
-import getCurl from './curl.js';
-import getQueue from './queue.js';
+import {getCurl} from './curl.js';
+import {getQueue} from './queue.js';
 
 const {blue, cyan, dim, green, red, yellow} = chalk;
 const debug = _debug('mad:request');

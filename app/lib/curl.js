@@ -31,7 +31,7 @@ const SKIP_HEADERS = new Set(['accept-encoding: gzip, deflate, br']);
  * @param {boolean} [params.skipResponse]
  * @returns {string}
  */
-export default (res, {body, form, json}, {skipResponse} = {}) => {
+export const getCurl = (res, {body, form, json}, {skipResponse} = {}) => {
     const msg = [];
 
     const response = res?.response || res;

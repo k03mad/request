@@ -47,7 +47,7 @@ const getLoggedQueue = (host, opts) => {
  * @param {number} [params.rps]
  * @returns {object}
  */
-export default (host, params = {}) => {
+export const getQueue = (host, params = {}) => {
     if (requestQueue[host]?._events) {
         return requestQueue[host];
     }
