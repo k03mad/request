@@ -35,7 +35,7 @@ const cacheDebug = msgArr => {
 /**
  * @param {string} url
  * @param {object} opts
- * @returns {object}
+ * @returns {import('got').Response}
  */
 const sendRequest = async (url, opts) => {
     try {
@@ -87,7 +87,7 @@ const sendRequest = async (url, opts) => {
  * @param {number} [params.concurrency]
  * @param {number} [params.rpm]
  * @param {number} [params.rps]
- * @returns {Promise<object>}
+ * @returns {import('got').Response}
  */
 export const request = (url, opts = {}, params = {}) => {
     const queue = getQueue(params.queueBy || new URL(url).host, params);
@@ -104,7 +104,7 @@ export const request = (url, opts = {}, params = {}) => {
  * @param {number} [params.concurrency]
  * @param {number} [params.rpm]
  * @param {number} [params.rps]
- * @returns {Promise<object>}
+ * @returns {import('got').Response}
  */
 export const requestCache = (url, opts = {}, {cacheBy, expire = 43_200, queueBy, ...params} = {}) => {
     const queue = getQueue(queueBy || new URL(url).host, params);
