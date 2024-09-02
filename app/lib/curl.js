@@ -42,11 +42,11 @@ export const getCurl = (res, {body, form, json}, {skipResponse} = {}) => {
         const statusCodeStringify = String(response.statusCode);
         let bgColor = bgWhite;
 
-        if ((/^(1|2)/).test(statusCodeStringify)) {
+        if ((/^[12]/).test(statusCodeStringify)) {
             bgColor = bgGreen;
         } else if (statusCodeStringify.startsWith('3')) {
             bgColor = bgYellow;
-        } else if ((/^(4|5)/).test(statusCodeStringify)) {
+        } else if ((/^[45]/).test(statusCodeStringify)) {
             bgColor = bgRed;
         }
 
