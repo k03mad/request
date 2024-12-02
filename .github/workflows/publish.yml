@@ -7,6 +7,7 @@ on:
 
 jobs:
   publish:
+    if: ${{ github.actor != 'dependabot[bot]' }}
     environment: npm
     runs-on: ubuntu-22.04
     steps:
