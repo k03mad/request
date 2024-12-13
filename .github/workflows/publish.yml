@@ -7,7 +7,6 @@ on:
 
 jobs:
   publish:
-    if: ${{ github.actor != 'dependabot[bot]' }}
     environment: npm
     runs-on: ubuntu-22.04
     steps:
@@ -15,21 +14,21 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: tj-actions/changed-files@v45
-        id: changed-files
+      - uses: EndBug/version-check@v2
+        id: check_pkg_version
         with:
-          files: package.json
+          diff-search: true
 
-      - if: steps.changed-files.outputs.any_changed == 'true'
+      - if: steps.check_pkg_version.outputs.changed == 'true'
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
           registry-url: 'https://registry.npmjs.org'
 
-      - if: steps.changed-files.outputs.any_changed == 'true'
+      - if: steps.check_pkg_version.outputs.changed == 'true'
         run: npm run setup
 
-      - if: steps.changed-files.outputs.any_changed == 'true'
+      - if: steps.check_pkg_version.outputs.changed == 'true'
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
