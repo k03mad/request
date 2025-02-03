@@ -53,7 +53,7 @@ export const getQueue = (host, params = {}) => {
     }
 
     for (const [key, value] of Object.entries(params)) {
-        if (intervals[key]) {
+        if (intervals[key] && value) {
             requestQueue[host] = intervals[key](value);
             break;
         }
