@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@k03mad/eslint-config": "28.6.0",
-    "eslint": "9.19.0",
+    "eslint": "9.21.0",
     "husky": "9.1.7"
   },
   "scripts": {
