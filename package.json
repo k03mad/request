@@ -1,6 +1,6 @@
 {
   "name": "@k03mad/request",
-  "version": "7.19.0",
+  "version": "7.20.0",
   "description": "Request library",
   "maintainers": [
     "Kirill Molchanov <k03.mad@gmail.com"
@@ -16,16 +16,16 @@
     "node": ">=22"
   },
   "dependencies": {
-    "chalk": "5.5.0",
+    "chalk": "5.6.0",
     "debug": "4.4.1",
     "got": "14.4.7",
     "p-queue": "8.1.0",
-    "pretty-bytes": "7.0.0",
+    "pretty-bytes": "7.0.1",
     "strip-ansi": "7.1.0"
   },
   "devDependencies": {
-    "@k03mad/eslint-config": "29.5.0",
-    "eslint": "9.32.0",
+    "@k03mad/eslint-config": "29.7.0",
+    "eslint": "9.33.0",
     "husky": "9.1.7"
   },
   "scripts": {
