@@ -29,11 +29,7 @@
     "husky": "9.1.7"
   },
   "scripts": {
-    "lint": "npm run lint:eslint",
-    "lint:eslint": "eslint ./ --cache",
-    "clean": "rm -rf ./node_modules .eslintcache || true",
-    "setup": "npm run clean && npm run setup:pnpm",
-    "setup:pnpm": "npm i pnpm -g && pnpm i",
+    "lint": "eslint ./ --cache",
     "prepare": "husky || true"
   }
 }
