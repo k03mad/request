@@ -81,7 +81,7 @@ const sendRequest = async (url, opts) => {
 
 /**
  * @param {string} url
- * @param {object} [opts]
+ * @param {import('got').OptionsWithPagination} [opts]
  * @param {object} [params]
  * @param {string} [params.queueBy]
  * @param {number} [params.concurrency]
@@ -96,7 +96,7 @@ export const request = (url, opts = {}, params = {}) => {
 
 /**
  * @param {string} url
- * @param {object} [opts]
+ * @param {import('got').OptionsWithPagination} [opts]
  * @param {object} [params]
  * @param {number} [params.expire] seconds
  * @param {object} [params.cacheBy]
