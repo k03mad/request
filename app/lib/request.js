@@ -106,7 +106,7 @@ export const request = (url, opts = {}, params = {}) => {
  * @param {number} [params.rps]
  * @returns {Promise<import('got').Response>}
  */
-export const requestCache = (url, opts = {}, {cacheBy, expire = 43_200, queueBy, ...params} = {}) => {
+export const requestCache = (url, opts = {}, {cacheBy, expire = 3600, queueBy, ...params} = {}) => {
     const queue = getQueue(queueBy || new URL(url).host, params);
 
     return queue.add(async () => {
