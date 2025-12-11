@@ -5,9 +5,12 @@ on:
     branches:
       - master
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   publish:
-    environment: npm
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -30,5 +33,3 @@ jobs:
 
       - if: steps.check_pkg_version.outputs.changed == 'true'
         run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
