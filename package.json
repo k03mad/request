@@ -1,6 +1,6 @@
 {
   "name": "@k03mad/request",
-  "version": "9.0.0",
+  "version": "9.0.1",
   "description": "Request library",
   "maintainers": [
     "Kirill Molchanov <k03.mad@gmail.com"
@@ -24,8 +24,8 @@
     "strip-ansi": "7.1.2"
   },
   "devDependencies": {
-    "@k03mad/eslint-config": "30.0.0",
-    "eslint": "9.39.1",
+    "@k03mad/eslint-config": "30.0.1",
+    "eslint": "9.39.2",
     "husky": "9.1.7"
   },
   "scripts": {
