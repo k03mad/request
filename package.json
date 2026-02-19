@@ -1,19 +1,20 @@
 {
   "name": "@k03mad/request",
-  "version": "14.0.0",
+  "version": "14.0.1",
   "description": "Request library",
+  "license": "MIT",
   "maintainers": [
     "Kirill Molchanov <k03.mad@gmail.com"
   ],
-  "main": "app/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/k03mad/request.git"
   },
-  "license": "MIT",
   "type": "module",
-  "engines": {
-    "node": ">=24"
+  "main": "app/index.js",
+  "scripts": {
+    "lint": "oxlint --report-unused-disable-directives && oxfmt --check",
+    "prepare": "husky || true"
   },
   "dependencies": {
     "chalk": "5.6.2",
@@ -24,12 +25,12 @@
     "strip-ansi": "7.1.2"
   },
   "devDependencies": {
-    "@k03mad/eslint-config": "34.1.2",
-    "eslint": "10.0.0",
-    "husky": "9.1.7"
+    "@k03mad/oxlint-config": "0.0.8",
+    "husky": "9.1.7",
+    "oxfmt": "0.34.0",
+    "oxlint": "1.49.0"
   },
-  "scripts": {
-    "lint": "eslint ./ --cache",
-    "prepare": "husky || true"
+  "engines": {
+    "node": ">=24"
   }
 }
