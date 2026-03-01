@@ -22,7 +22,7 @@
     "got": "14.6.6",
     "p-queue": "9.1.0",
     "pretty-bytes": "7.1.0",
-    "strip-ansi": "7.1.2"
+    "strip-ansi": "7.2.0"
   },
   "devDependencies": {
     "@k03mad/oxlint-config": "0.1.0",
