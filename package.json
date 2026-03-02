@@ -1,6 +1,6 @@
 {
   "name": "@k03mad/request",
-  "version": "14.1.0",
+  "version": "14.2.0",
   "description": "Request library",
   "license": "MIT",
   "maintainers": [
@@ -22,13 +22,13 @@
     "got": "14.6.6",
     "p-queue": "9.1.0",
     "pretty-bytes": "7.1.0",
-    "strip-ansi": "7.1.2"
+    "strip-ansi": "7.2.0"
   },
   "devDependencies": {
-    "@k03mad/oxlint-config": "0.1.0",
+    "@k03mad/oxlint-config": "0.2.0",
     "husky": "9.1.7",
-    "oxfmt": "0.35.0",
-    "oxlint": "1.50.0"
+    "oxfmt": "0.36.0",
+    "oxlint": "1.51.0"
   },
   "engines": {
     "node": ">=24"
