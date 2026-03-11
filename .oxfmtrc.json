@@ -5,7 +5,7 @@
   "arrowParens": "avoid",
   "bracketSpacing": false,
   "quoteProps": "consistent",
-  "experimentalSortImports": {
+  "sortImports": {
     "groups": [
       ["builtin"],
       ["external", "type-external"],
@@ -14,5 +14,15 @@
       ["sibling", "type-sibling"],
       ["index", "type-index"]
     ]
-  }
+  },
+  "tabWidth": 4,
+  "overrides": [
+    {
+      "files": ["*.json", "*.jsonc", "*.yaml", "*.yml"],
+      "options": {
+        "tabWidth": 2,
+        "trailingComma": "none"
+      }
+    }
+  ]
 }
