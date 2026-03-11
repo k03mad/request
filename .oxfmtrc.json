@@ -1,5 +1,5 @@
 {
-  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "": "./node_modules/oxfmt/configuration_schema.json",
   "ignorePatterns": ["node_modules/**"],
   "singleQuote": true,
   "arrowParens": "avoid",
@@ -15,13 +15,14 @@
       ["index", "type-index"]
     ]
   },
-  "tabWidth": 4,
+  "tabWidth": 2,
+  "trailingComma": "none",
   "overrides": [
     {
-      "files": ["*.json", "*.jsonc", "*.yaml", "*.yml"],
+      "files": ["*.js", "*.ts"],
       "options": {
-        "tabWidth": 2,
-        "trailingComma": "none"
+        "tabWidth": 4,
+        "trailingComma": "all"
       }
     }
   ]
