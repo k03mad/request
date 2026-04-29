@@ -98,7 +98,7 @@ export const request = (url, opts = {}, params = {}) => {
  * @param {string} url
  * @param {import('got').OptionsWithPagination} [opts]
  * @param {object} [params]
- * @param {number} [params.expire] seconds
+ * @param {number} [params.expire] Seconds
  * @param {object} [params.cacheBy]
  * @param {string} [params.queueBy]
  * @param {number} [params.concurrency]

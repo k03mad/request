@@ -5,6 +5,9 @@
   "arrowParens": "avoid",
   "bracketSpacing": false,
   "quoteProps": "consistent",
+  "jsdoc": {
+    "lineWrappingStyle": "balance"
+  },
   "sortImports": {
     "groups": [
       ["builtin"],
@@ -19,9 +22,14 @@
   "trailingComma": "none",
   "overrides": [
     {
+      "files": ["*.js"],
+      "options": {
+        "tabWidth": 4
+      }
+    },
+    {
       "files": ["*.js", "*.ts"],
       "options": {
-        "tabWidth": 4,
         "trailingComma": "all"
       }
     }
