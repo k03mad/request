@@ -28,8 +28,8 @@ importers:
         version: 7.2.0
     devDependencies:
       '@k03mad/oxlint-config':
-        specifier: 0.9.0
-        version: 0.9.0
+        specifier: 0.9.1
+        version: 0.9.1
       husky:
         specifier: 9.1.7
         version: 9.1.7
@@ -42,8 +42,8 @@ importers:
 
 packages:
 
-  '@k03mad/oxlint-config@0.9.0':
-    resolution: {integrity: sha512-nSpcct17D088iGobx76vXnsewOizmpvb/OEyENVfJ8ZfxYpBANu5RkfMZnDc+3aR0wokQhGDHKVvZ3B4M30wkA==}
+  '@k03mad/oxlint-config@0.9.1':
+    resolution: {integrity: sha512-spW00PaElFxUaYMModJYizHFtAI4UKePxvm5dNyFBhE7tVsj8nq6cVWFyp8BtZpK7gYc0ApzwmIUDKR5z2Aqbg==}
     engines: {node: '>=24'}
 
   '@keyv/serialize@1.1.1':
@@ -460,7 +460,7 @@ packages:
 
 snapshots:
 
-  '@k03mad/oxlint-config@0.9.0': {}
+  '@k03mad/oxlint-config@0.9.1': {}
 
   '@keyv/serialize@1.1.1': {}
 
