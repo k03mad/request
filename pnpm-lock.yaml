@@ -450,8 +450,8 @@ packages:
     resolution: {integrity: sha512-Pugqs6M0m7Lv1I7FtxN4aoyToKg1C4tu+/381vH35y8oENM/Ai7f7C4StcoK4/+BSw9ebcS8jRiVrORFKCALLw==}
     engines: {node: ^20.0.0 || >=22.0.0}
 
-  type-fest@5.6.0:
-    resolution: {integrity: sha512-8ZiHFm91orbSAe2PSAiSVBVko18pbhbiB3U9GglSzF/zCGkR+rxpHx6sEMCUm4kxY4LjDIUGgCfUMtwfZfjfUA==}
+  type-fest@5.7.0:
+    resolution: {integrity: sha512-1URUxUqfHFM1c+zfSPsa3gnkO7Aq21qyH75SIduNYz4SzY964rn1X2vCMQaHSHhktiw+0kPa2iyb6PUpXqB6Vg==}
     engines: {node: '>=20'}
 
   uint8array-extras@1.5.0:
@@ -631,7 +631,7 @@ snapshots:
       keyv: 5.6.0
       lowercase-keys: 4.0.1
       responselike: 4.0.2
-      type-fest: 5.6.0
+      type-fest: 5.7.0
       uint8array-extras: 1.5.0
 
   http-cache-semantics@4.2.0: {}
@@ -730,7 +730,7 @@ snapshots:
 
   tinypool@2.1.0: {}
 
-  type-fest@5.6.0:
+  type-fest@5.7.0:
     dependencies:
       tagged-tag: 1.0.0
 
