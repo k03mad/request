@@ -1,5 +1,5 @@
 {
-  "oxc.fmt.configPath": ".oxfmtrc.json",
+  "oxc.fmt.configPath": "node_modules/@k03mad/oxlint-config/.oxfmtrc.json",
   "oxc.fixKind": "safe_fix",
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "oxc.oxc-vscode",

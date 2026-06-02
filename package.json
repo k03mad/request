@@ -1,6 +1,6 @@
 {
   "name": "@k03mad/request",
-  "version": "15.3.2",
+  "version": "15.3.3",
   "description": "Request library",
   "license": "MIT",
   "maintainers": [
@@ -13,7 +13,7 @@
   "type": "module",
   "main": "app/index.js",
   "scripts": {
-    "lint": "oxlint -c node_modules/@k03mad/oxlint-config/.oxlintrc.json && oxfmt -c node_modules/@k03mad/oxlint-config/.oxfmtrc.json --check",
+    "lint": "oxlint && oxfmt -c node_modules/@k03mad/oxlint-config/.oxfmtrc.json --check",
     "prepare": "husky || true"
   },
   "dependencies": {
@@ -25,7 +25,7 @@
     "strip-ansi": "7.2.0"
   },
   "devDependencies": {
-    "@k03mad/oxlint-config": "0.9.2",
+    "@k03mad/oxlint-config": "0.9.3",
     "husky": "9.1.7",
     "oxfmt": "0.53.0",
     "oxlint": "1.68.0"
