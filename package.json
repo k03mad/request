@@ -1,6 +1,6 @@
 {
   "name": "@k03mad/request",
-  "version": "15.5.0",
+  "version": "15.6.0",
   "description": "Request library",
   "license": "MIT",
   "maintainers": [
@@ -25,7 +25,7 @@
     "strip-ansi": "7.2.0"
   },
   "devDependencies": {
-    "@k03mad/oxlint-config": "0.10.1",
+    "@k03mad/oxlint-config": "0.11.0",
     "husky": "9.1.7",
     "oxfmt": "0.57.0",
     "oxlint": "1.72.0"
