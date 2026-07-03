@@ -1,6 +1,6 @@
 {
   "name": "@k03mad/request",
-  "version": "15.4.0",
+  "version": "15.5.0",
   "description": "Request library",
   "license": "MIT",
   "maintainers": [
@@ -19,8 +19,8 @@
   "dependencies": {
     "chalk": "5.6.2",
     "debug": "4.4.3",
-    "got": "15.0.7",
-    "p-queue": "9.3.0",
+    "got": "15.1.0",
+    "p-queue": "9.3.1",
     "pretty-bytes": "7.1.0",
     "strip-ansi": "7.2.0"
   },

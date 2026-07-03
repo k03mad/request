@@ -1,2 +1,2 @@
 minimumReleaseAgeExclude:
-  - '@k03mad/oxlint-config@0.10.1'
+  - p-queue@9.3.1
